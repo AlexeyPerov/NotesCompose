@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="blue200">#FF3377FF</color>
+    <color name="blue400">#FF4488FF</color>
+    <color name="blue">#FF2266EE</color>
+    <color name="teal">#FF68E4DC</color>
+    <color name="teal700">#8868E4DC</color>
+    <color name="status_bar">#2255EE</color>
+    <color name="nav_bar">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="onSurface">#000000</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#FFFFFF</color>
+</resources>

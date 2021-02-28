@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/splashFragment"
+    tools:ignore="MissingDefaultResource">
+
+    <fragment
+        android:id="@+id/loginEntryFragment"
+        android:name="com.casualapps.mynotes.views.fragments.LoginEntryFragment"
+        android:label="LoginEntryFragment">
+        <action
+            android:id="@+id/action_loginEntryFragment_to_initializationFragment"
+            app:destination="@id/initializationFragment"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginEntryFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/no_anim"
+            app:popEnterAnim="@anim/no_anim"
+            app:popExitAnim="@anim/slide_out_top" />
+        <action
+            android:id="@+id/action_loginEntryFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/no_anim"
+            app:popEnterAnim="@anim/no_anim"
+            app:popExitAnim="@anim/slide_out_top" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.casualapps.mynotes.views.fragments.SignUpFragment"
+        android:label="SignUpFragment">
+        <action
+            android:id="@+id/action_signUpFragment_to_initializationFragment"
+            app:destination="@id/initializationFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.casualapps.mynotes.views.fragments.SignInFragment"
+        android:label="SignInFragment">
+        <action
+            android:id="@+id/action_signInFragment_to_initializationFragment"
+            app:destination="@id/initializationFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.casualapps.mynotes.views.fragments.MainFragment"
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_mainFragment"
+            app:destination="@id/loginEntryFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/no_anim"
+            app:popEnterAnim="@anim/no_anim"
+            app:popExitAnim="@anim/slide_out_top" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginEntryFragment_replace"
+            app:destination="@id/loginEntryFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_webView"
+            app:destination="@id/webView" />
+        <action
+            android:id="@+id/action_mainFragment_to_categoriesGridFragment"
+            app:destination="@id/categoriesGridFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.casualapps.mynotes.views.fragments.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_loginEntryFragment"
+            app:destination="@id/loginEntryFragment"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_initializationFragment"
+            app:destination="@id/initializationFragment"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.casualapps.mynotes.views.fragments.CategoryFragment"
+        android:label="CategoryFragment">
+        <argument
+            android:name="category"
+            app:argType="com.casualapps.mynotes.data.entities.Category" />
+        <action
+            android:id="@+id/action_categoryFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webView"
+        android:name="com.casualapps.mynotes.views.fragments.CustomWebView"
+        android:label="WebView">
+        <argument
+            android:name="webRequestKey"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoriesGridFragment"
+        android:name="com.casualapps.mynotes.views.fragments.CategoriesGridFragment"
+        android:label="CategoriesGridFragment">
+        <action
+            android:id="@+id/action_categoriesGridFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.casualapps.mynotes.views.fragments.NoteFragment"
+        android:label="NoteFragment">
+        <argument
+            android:name="note"
+            app:argType="com.casualapps.mynotes.data.entities.NoteArguments" />
+    </fragment>
+    <fragment
+        android:id="@+id/initializationFragment"
+        android:name="com.casualapps.mynotes.views.fragments.InitializationFragment"
+        android:label="InitializationFragment" >
+        <argument
+            android:name="userId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_initializationFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

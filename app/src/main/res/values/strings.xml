@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="notes_menu">Notes</string>
+    <string name="filter_menu">Search</string>
+    <string name="favorite_menu">Bookmarks</string>
+    <string name="settings_menu">Settings</string>
+</resources>
