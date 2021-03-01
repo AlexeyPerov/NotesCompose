@@ -28,8 +28,8 @@ import kotlinx.coroutines.launch
 class NoteFragment : FragmentBase() {
     private lateinit var noteArguments: NoteArguments
 
-    private val viewModel: NoteViewModel by viewModels()
-    private val animateState = mutableStateOf(2)
+    private val _viewModel: NoteViewModel by viewModels()
+    private val _animationState = mutableStateOf(2)
 
     override fun onArgumentsReady(bundle: Bundle) {
         noteArguments = NoteFragmentArgs.fromBundle(bundle).note
@@ -46,12 +46,12 @@ class NoteFragment : FragmentBase() {
     }
 
     override fun initViews() {
-        viewModel.setNote(noteArguments.categoryId, noteArguments.note)
+        _viewModel.setNote(noteArguments.categoryId, noteArguments.note)
         ioScope.launch {
             var plus = true
             while (isActive) {
                 delay(32)
-                animateState.value = animateState.value + 1 * if (plus) 1 else -1
+                _animationState.value = _animationState.value + 1 * if (plus) 1 else -1
                 plus = !plus
             }
         }
@@ -59,7 +59,7 @@ class NoteFragment : FragmentBase() {
 
     @Composable
     override fun setContent() {
-        val note = viewModel.noteLiveData.observeAsState(initial = Note("", "", "", false, 0, "")).value
+        val note = _viewModel.noteLiveData.observeAsState(initial = Note("", "", "", false, 0, "")).value
         Column {
             H6(text = "Note", modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp))
             Divider(modifier = Modifier
@@ -67,7 +67,7 @@ class NoteFragment : FragmentBase() {
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.3F))
-            WithState(contentState = viewModel.contentState) {
+            WithState(contentState = _viewModel.contentState) {
                 NoteCard(title = note.title, contents = note.contents) {
 
                 }

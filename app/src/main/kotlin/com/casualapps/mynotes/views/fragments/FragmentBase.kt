@@ -19,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 
 abstract class FragmentBase : Fragment() {
-    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val _uiScope = CoroutineScope(Dispatchers.Main)
     protected val ioScope = CoroutineScope(Dispatchers.IO)
 
     @Composable
@@ -80,7 +80,7 @@ abstract class FragmentBase : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        uiScope.cancel()
+        _uiScope.cancel()
     }
 
     override fun onDestroy() {

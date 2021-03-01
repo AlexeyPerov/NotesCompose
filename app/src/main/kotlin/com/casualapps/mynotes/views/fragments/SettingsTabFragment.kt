@@ -35,15 +35,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingsTabFragment : FragmentBase() {
-    private val viewModel: SettingsViewModel by viewModels()
-    private val mainNavigationController by lazy { Navigation.findNavController(requireActivity(),
+    private val _viewModel: SettingsViewModel by viewModels()
+    private val _mainNavigationController by lazy { Navigation.findNavController(requireActivity(),
         R.id.app_host_fragment) }
-    private val dialogState = mutableStateOf(false)
+    private val _dialogState = mutableStateOf(false)
 
     override fun initObservers() {
-        viewModel.logoutLiveData.observe(viewLifecycleOwner) {
+        _viewModel.logoutLiveData.observe(viewLifecycleOwner) {
             if (it == true) {
-                mainNavigationController.navigateSafely(MainFragmentDirections.actionMainFragmentToLoginEntryFragmentReplace())
+                _mainNavigationController.navigateSafely(MainFragmentDirections.actionMainFragmentToLoginEntryFragmentReplace())
             }
         }
     }
@@ -59,7 +59,7 @@ class SettingsTabFragment : FragmentBase() {
                 HeightSpacer(value = 16)
 
                 CardButton(text = adminPanelRequest.title, onClick = {
-                    mainNavigationController.navigateSafely(MainFragmentDirections
+                    _mainNavigationController.navigateSafely(MainFragmentDirections
                         .actionMainFragmentToWebView()
                         .setWebRequestKey(adminPanelRequest.key))
                 })
@@ -71,18 +71,18 @@ class SettingsTabFragment : FragmentBase() {
                 ColumnLine()
             }
         }
-        Dialog(state = dialogState, title = "Logout", desc = "Are you sure you want to Logout?", pText = "Confirm") {
-            viewModel.logout()
+        Dialog(state = _dialogState, title = "Logout", desc = "Are you sure you want to Logout?", pText = "Confirm") {
+            _viewModel.logout()
         }
     }
 
     override fun initViews() {
-        viewModel.fetchUser()
+        _viewModel.fetchUser()
     }
 
     @Composable
     fun UserCard() {
-        val userNameState = viewModel.userNameLiveData.observeAsState()
+        val userNameState = _viewModel.userNameLiveData.observeAsState()
         Card(
             Modifier
                 .fillMaxWidth()
@@ -98,7 +98,7 @@ class SettingsTabFragment : FragmentBase() {
                 LoginStateButton()
             }
         }
-        if (viewModel.logoutLiveData.observeAsState().value == true) {
+        if (_viewModel.logoutLiveData.observeAsState().value == true) {
             Toast(message = "Logged Out Successfully!")
         }
     }
@@ -106,14 +106,14 @@ class SettingsTabFragment : FragmentBase() {
     @Composable
     fun BoxScope.LoginStateButton() {
         CardButton(
-                text = if (viewModel.loginState.value) "Logout" else "Login",
+                text = if (_viewModel.loginState.value) "Logout" else "Login",
                 modifier = Modifier
                     .width(80.dp)
                     .align(Alignment.CenterEnd), height = 30) {
-            if (viewModel.loginState.value) {
-                dialogState.value = true
+            if (_viewModel.loginState.value) {
+                _dialogState.value = true
             } else {
-                mainNavigationController.navigateSafely(MainFragmentDirections.actionMainFragmentToLoginEntryFragmentReplace())
+                _mainNavigationController.navigateSafely(MainFragmentDirections.actionMainFragmentToLoginEntryFragmentReplace())
             }
         }
     }

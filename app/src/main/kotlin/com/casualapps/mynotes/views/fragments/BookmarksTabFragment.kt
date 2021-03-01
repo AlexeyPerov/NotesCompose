@@ -14,26 +14,26 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BookmarksTabFragment : FragmentBase() {
-    private val viewModel: BookmarksViewModel by viewModels()
+    private val _viewModel: BookmarksViewModel by viewModels()
 
     private val mainNavigationController by lazy { Navigation.findNavController(requireActivity(),
         R.id.app_host_fragment) }
 
     @Composable
     override fun setContent() {
-        WithState(contentState = viewModel.contentState,
+        WithState(contentState = _viewModel.contentState,
                 emptyMessage = "...") {
             Bookmarks()
         }
     }
 
     override fun initViews() {
-        viewModel.fetchBookmarks()
+        _viewModel.fetchBookmarks()
     }
 
     @Composable
     fun Bookmarks() {
-        val categoriesStateFlow = viewModel.categoriesStateFlow.collectAsState(
+        val categoriesStateFlow = _viewModel.categoriesStateFlow.collectAsState(
             initial = emptyList()
         )
 

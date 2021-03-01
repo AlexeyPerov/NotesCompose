@@ -19,14 +19,14 @@ import com.casualapps.mynotes.R.drawable
 
 @AndroidEntryPoint
 class LoginEntryFragment : FragmentBase() {
-    private var animate = true
+    private var _animation = true
 
     @Composable
     override fun setContent() {
         Box(modifier = Modifier.matchParent(), alignment = Alignment.Center) {
             val mainTransitionState = transition(definition = mainFragmentTransition,
-                initState = if (animate) LoginEntryTransitionState.START else LoginEntryTransitionState.END, toState = LoginEntryTransitionState.END)
-            animate = false
+                initState = if (_animation) LoginEntryTransitionState.START else LoginEntryTransitionState.END, toState = LoginEntryTransitionState.END)
+            _animation = false
 
             val alpha = mainTransitionState[alphaPropKey]
             LoginOptions(alpha)

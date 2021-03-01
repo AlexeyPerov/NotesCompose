@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : FragmentBase() {
-    private val viewModel: SignUpViewModel by viewModels()
+    private val _viewModel: SignUpViewModel by viewModels()
 
     @Composable
     override fun setContent() {
@@ -42,8 +42,8 @@ class SignUpFragment : FragmentBase() {
                     Text(text = "Create Account", style = MaterialTheme.typography.h6)
                     HeightSpacer(value = 30)
                 }
-                val userNameErrorState = viewModel.userNameErrorLiveData.observeAsState()
-                val passwordErrorState = viewModel.passwordErrorLiveData.observeAsState()
+                val userNameErrorState = _viewModel.userNameErrorLiveData.observeAsState()
+                val passwordErrorState = _viewModel.passwordErrorLiveData.observeAsState()
                 val username = remember { mutableStateOf(TextFieldValue("user")) }
 
                 OutlinedTextField(value = username.value,
@@ -78,12 +78,12 @@ class SignUpFragment : FragmentBase() {
                 HeightSpacer(value = 30)
 
                 CardButton(text = "Register", icon = -1, onClick = {
-                    viewModel.register(username = username.value.text, password = password.value.text)
+                    _viewModel.register(username = username.value.text, password = password.value.text)
                 })
             }
         }
 
-        viewModel.registrationResultLiveData.observe(viewLifecycleOwner) {
+        _viewModel.registrationResultLiveData.observe(viewLifecycleOwner) {
             navController.navigateSafely(SignUpFragmentDirections.actionSignUpFragmentToInitializationFragment().setUserId(it))
         }
     }

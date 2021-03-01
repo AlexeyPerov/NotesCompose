@@ -26,14 +26,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CategoriesTabFragment : FragmentBase() {
-    private val viewModel: CategoriesViewModel by viewModels()
+    private val _viewModel: CategoriesViewModel by viewModels()
 
     private val mainNavigationController by lazy { Navigation.findNavController(requireActivity(),
         R.id.app_host_fragment) }
 
     @Composable
     override fun setContent() {
-        when (viewModel.categoriesState.value) {
+        when (_viewModel.categoriesState.value) {
             ContentState.LOADING -> {
                 LoadingView()
             }
@@ -55,9 +55,9 @@ class CategoriesTabFragment : FragmentBase() {
 
     @Composable
     fun CategoriesSection() {
-        val selectedCategoryId = viewModel.selectedCategoryId.value
+        val selectedCategoryId = _viewModel.selectedCategoryId.value
 
-        val categoriesData = viewModel.categoriesLiveData.observeAsState(initial = emptyList())
+        val categoriesData = _viewModel.categoriesLiveData.observeAsState(initial = emptyList())
         val categories = categoriesData.value
 
         HeightSpacer(value = 8)
@@ -79,13 +79,13 @@ class CategoriesTabFragment : FragmentBase() {
             WidthSpacer(value = 4)
             if (index == optionsIndexes.size - 1) {
                 CategoryRowAddCard() {
-                    viewModel.addCategory(it)
+                    _viewModel.addCategory(it)
                 }
             } else {
                 val categoryIndex = optionsIndexes[index]
                 val category = categories[categoryIndex]
                 CategoryRowCard(category = category, isSelected = category.id == selectedCategoryId) {
-                    viewModel.selectCategory(categoryId = category.id)
+                    _viewModel.selectCategory(categoryId = category.id)
                 }
             }
             WidthSpacer(value = 4)
@@ -94,11 +94,11 @@ class CategoriesTabFragment : FragmentBase() {
 
     @Composable
     fun SelectedCategoryNotesSection() {
-        val notesData = viewModel.notesLiveData.observeAsState(initial = emptyList())
+        val notesData = _viewModel.notesLiveData.observeAsState(initial = emptyList())
         val notes = notesData.value
-        val category = viewModel.selectedCategoryId.value
+        val category = _viewModel.selectedCategoryId.value
 
-        when (viewModel.notesState.value) {
+        when (_viewModel.notesState.value) {
             ContentState.LOADING -> {
                 LinearProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
             }
@@ -113,7 +113,7 @@ class CategoriesTabFragment : FragmentBase() {
                     if (index == optionsIndexes.size - 1) {
                         HeightSpacer(20)
                         NoteAddCard { title, contents ->
-                            viewModel.addNote(title, contents)
+                            _viewModel.addNote(title, contents)
                         }
                         HeightSpacer(10)
                     } else {

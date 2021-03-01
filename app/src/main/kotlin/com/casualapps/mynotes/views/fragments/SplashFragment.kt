@@ -28,7 +28,9 @@ class SplashFragment : FragmentBase() {
     override fun setContent() {
         Column(modifier = Modifier
                 .matchParent()
-                .background(MaterialTheme.colors.surface), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                .background(MaterialTheme.colors.surface),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center) {
             LinearProgressIndicator()
         }
 

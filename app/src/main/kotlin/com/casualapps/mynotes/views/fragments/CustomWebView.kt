@@ -18,13 +18,12 @@ import com.casualapps.mynotes.compose.layout.ToolBar
 import com.casualapps.mynotes.enums.WebRequest
 
 class CustomWebView : FragmentBase() {
-    private lateinit var webRequest: WebRequest
+    private lateinit var _webRequest: WebRequest
+    private val _progressState = mutableStateOf(true)
 
     override fun onArgumentsReady(bundle: Bundle) {
-        webRequest = WebRequest[CustomWebViewArgs.fromBundle(bundle).webRequestKey]
+        _webRequest = WebRequest[CustomWebViewArgs.fromBundle(bundle).webRequestKey]
     }
-
-    private val progressState = mutableStateOf(true)
 
     @SuppressLint("SetJavaScriptEnabled")
     @Composable
@@ -40,14 +39,14 @@ class CustomWebView : FragmentBase() {
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     if (newProgress > 90) {
-                        progressState.value = false
+                        _progressState.value = false
                     }
                 }
             }
-            loadUrl(webRequest.url)
+            loadUrl(_webRequest.url)
         }
-        Scaffold(topBar = { ToolBar(title = webRequest.title) { mainActivity.onBackPressed() } }) {
-            if (progressState.value) {
+        Scaffold(topBar = { ToolBar(title = _webRequest.title) { mainActivity.onBackPressed() } }) {
+            if (_progressState.value) {
                 LoadingView()
             } else {
                 AndroidView({ webView }, modifier = Modifier.fillMaxSize())

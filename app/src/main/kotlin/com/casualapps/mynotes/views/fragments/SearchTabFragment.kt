@@ -40,7 +40,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalLayout
 @AndroidEntryPoint
 class SearchTabFragment : FragmentBase() {
-    private val viewModel: SearchViewModel by viewModels()
+    private val _viewModel: SearchViewModel by viewModels()
 
     private val mainNavigationController by lazy { Navigation.findNavController(requireActivity(),
         R.id.app_host_fragment) }
@@ -81,7 +81,7 @@ class SearchTabFragment : FragmentBase() {
                         .height(60.dp)
                         .padding(horizontal = 8.dp, vertical = 3.dp)
                         .clickable {
-                            viewModel.search(searchQueryState.value)
+                            _viewModel.search(searchQueryState.value)
                         }
                 ) {
                     Icon(Icons.Filled.Search)
@@ -90,7 +90,7 @@ class SearchTabFragment : FragmentBase() {
 
             HeightSpacer(value = 10)
             WithState(
-                contentState = viewModel.contentState,
+                contentState = _viewModel.contentState,
                 IdleView = {
                     RecentSearchList {
                         searchQueryState.value = it
@@ -98,7 +98,7 @@ class SearchTabFragment : FragmentBase() {
                 },
                 emptyMessage = "Nothing found"
             ) {
-                SearchResults(viewModel)
+                SearchResults(_viewModel)
             }
         }
     }
@@ -132,7 +132,7 @@ class SearchTabFragment : FragmentBase() {
         ) {
             Column(Modifier.fillMaxWidth()) {
                 val recentSearchState =
-                    viewModel.recentSearchLiveData.observeAsState(initial = emptyList())
+                    _viewModel.recentSearchLiveData.observeAsState(initial = emptyList())
                 if (recentSearchState.value.isNotEmpty()) {
                     HeightSpacer(value = 8)
                     IconText(text = "Recent Searches", icon = R.drawable.ic_baseline_search_24)
@@ -142,7 +142,7 @@ class SearchTabFragment : FragmentBase() {
                     recentSearchState.value.forEach {
                         Chip(text = it, icon = R.drawable.ic_baseline_search_24) {
                             onClick(it)
-                            viewModel.search(it)
+                            _viewModel.search(it)
                         }
                     }
                 }

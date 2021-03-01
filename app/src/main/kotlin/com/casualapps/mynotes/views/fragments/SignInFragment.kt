@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignInFragment : FragmentBase() {
-    private val viewModel: LoginViewModel by viewModels()
+    private val _viewModel: LoginViewModel by viewModels()
 
     @Composable
     override fun setContent() {
@@ -44,8 +44,8 @@ class SignInFragment : FragmentBase() {
                     H6(text = "Sign In")
                     HeightSpacer(value = 30)
                 }
-                val userNameErrorState = viewModel.userNameErrorLiveData.observeAsState()
-                val passwordErrorState = viewModel.passwordErrorLiveData.observeAsState()
+                val userNameErrorState = _viewModel.userNameErrorLiveData.observeAsState()
+                val passwordErrorState = _viewModel.passwordErrorLiveData.observeAsState()
                 val username = remember { mutableStateOf(TextFieldValue("user")) }
 
                 OutlinedTextField(value = username.value,
@@ -80,11 +80,11 @@ class SignInFragment : FragmentBase() {
                 HeightSpacer(value = 30)
 
                 CardButton(text = "Login", onClick = {
-                    viewModel.login(username = username.value.text, password = password.value.text)
+                    _viewModel.login(username = username.value.text, password = password.value.text)
                 })
             }
         }
-        viewModel.loginResultLiveData.observe(viewLifecycleOwner) {
+        _viewModel.loginResultLiveData.observe(viewLifecycleOwner) {
             if (it != -1L) {
                 navController.navigateSafely(SignInFragmentDirections.actionSignInFragmentToInitializationFragment().setUserId(it))
             } else {

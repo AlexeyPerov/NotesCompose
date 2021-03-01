@@ -53,13 +53,13 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategoryFragment : FragmentBase() {
-    private lateinit var category: Category
+    private lateinit var _category: Category
 
     private val viewModel: CategoryDetailViewModel by viewModels()
     private val animateState = mutableStateOf(2)
 
     override fun onArgumentsReady(bundle: Bundle) {
-        category = CategoryFragmentArgs.fromBundle(bundle).category
+        _category = CategoryFragmentArgs.fromBundle(bundle).category
     }
 
     override fun onStop() {
@@ -73,8 +73,8 @@ class CategoryFragment : FragmentBase() {
     }
 
     override fun initViews() {
-        viewModel.updateBookmarkStatus(category)
-        viewModel.updateNotes(category)
+        viewModel.updateBookmarkStatus(_category)
+        viewModel.updateNotes(_category)
         ioScope.launch {
             var plus = true
             while (isActive) {
@@ -88,7 +88,7 @@ class CategoryFragment : FragmentBase() {
     @Composable
     override fun setContent() {
         Column {
-            CategoryDetailView(category)
+            CategoryDetailView(_category)
             H6(text = "Notes", modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp))
             Divider(modifier = Modifier.preferredHeight((0.8).dp).fillMaxWidth().padding(horizontal = 12.dp),
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.3F))
@@ -105,7 +105,7 @@ class CategoryFragment : FragmentBase() {
             NoteCard(title = note.title, contents = note.contents) {
                 navController.navigateSafely(
                     CategoryFragmentDirections.actionCategoryFragmentToNoteFragment(
-                        NoteArguments(categoryId = category.id, note = note)
+                        NoteArguments(categoryId = _category.id, note = note)
                     )
                 )
             }
@@ -172,10 +172,10 @@ class CategoryFragment : FragmentBase() {
                     .align(Alignment.TopEnd).clickable {
                         if (bookmarksState.value) {
                             textToast("Removed from Bookmarks")
-                            viewModel.removeFromBookmarks(category)
+                            viewModel.removeFromBookmarks(_category)
                         } else {
                             textToast("Added to Bookmarks")
-                            viewModel.addToBookmarks(category)
+                            viewModel.addToBookmarks(_category)
                         }
                     }, contentScale = ContentScale.Inside)
 

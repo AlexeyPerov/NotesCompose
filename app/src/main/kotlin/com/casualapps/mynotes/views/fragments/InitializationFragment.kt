@@ -20,12 +20,11 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class InitializationFragment : FragmentBase() {
-    private val viewModel: InitializationViewModel by viewModels()
-
-    private var userId: Long = 0
+    private val _viewModel: InitializationViewModel by viewModels()
+    private var _userId: Long = 0
 
     override fun onArgumentsReady(bundle: Bundle) {
-        userId = InitializationFragmentArgs.fromBundle(bundle).userId
+        _userId = InitializationFragmentArgs.fromBundle(bundle).userId
     }
 
     @Composable
@@ -37,8 +36,8 @@ class InitializationFragment : FragmentBase() {
         }
 
         lifecycleScope.launch {
-            Log.d("Initialization", "Initializing repositories with userId: $userId")
-            viewModel.initializeRepositories(userId)
+            Log.d("Initialization", "Initializing repositories with userId: $_userId")
+            _viewModel.initializeRepositories(_userId)
             navController.navigateSafely(InitializationFragmentDirections.actionInitializationFragmentToMainFragment())
         }
     }

@@ -14,13 +14,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class CategoriesGridFragment : FragmentBase() {
-    private val viewModel: CategoriesListViewModel by viewModels()
+    private val _viewModel: CategoriesListViewModel by viewModels()
 
     override fun onArgumentsReady(bundle: Bundle) {
     }
 
     override fun initViews() {
-        viewModel.fetchCategories()
+        _viewModel.fetchCategories()
     }
 
     @Composable
@@ -30,10 +30,10 @@ class CategoriesGridFragment : FragmentBase() {
                 mainActivity.onBackPressed()
             }
         }) {
-            val categoriesStateFlow = viewModel.categoriesStateFlow.collectAsState(
+            val categoriesStateFlow = _viewModel.categoriesStateFlow.collectAsState(
                 initial = emptyList()
             )
-            WithState(contentState = viewModel.state) {
+            WithState(contentState = _viewModel.state) {
                 LazyGridFor(categoriesStateFlow.value) { category, _ ->
                     CategoryGridCard(category = category) {
                         navController.navigateSafely(

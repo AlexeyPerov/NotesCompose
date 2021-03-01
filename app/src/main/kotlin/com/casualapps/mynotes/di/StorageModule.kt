@@ -1,4 +1,4 @@
-package com.casualapps.mynotes.data
+package com.casualapps.mynotes.di
 
 import android.content.Context
 import androidx.datastore.preferences.createDataStore
