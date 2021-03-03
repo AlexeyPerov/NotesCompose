@@ -5,7 +5,7 @@ import com.casualapps.mynotes.data.repo.auth.PrefsAuthStateRepository
 import com.casualapps.mynotes.data.repo.bookmarks.BookmarksRepository
 import com.casualapps.mynotes.data.repo.bookmarks.RoomBookmarksRepository
 import com.casualapps.mynotes.data.repo.notes.NotesRepository
-import com.casualapps.mynotes.data.repo.notes.RoomNotesRepository
+import com.casualapps.mynotes.data.repo.notes.retrofit.RetrofitNotesRepository
 import com.casualapps.mynotes.data.repo.search.RoomSearchRepository
 import com.casualapps.mynotes.data.repo.search.SearchRepository
 import com.casualapps.mynotes.data.repo.user.RoomUserRepository
@@ -25,7 +25,7 @@ abstract class RepositoriesModule {
 
     @Singleton
     @Binds
-    abstract fun bindsNoteRepository(noteRepository: RoomNotesRepository): NotesRepository
+    abstract fun bindsNoteRepository(noteRepository: RetrofitNotesRepository): NotesRepository
 
     @Singleton
     @Binds

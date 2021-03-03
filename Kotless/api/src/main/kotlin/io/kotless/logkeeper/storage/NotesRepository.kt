@@ -1,11 +1,8 @@
 package io.kotless.logkeeper.storage
 
-import org.slf4j.LoggerFactory
 import kotlinx.serialization.*
 
 object NotesRepository {
-    private val logger = LoggerFactory.getLogger(NotesRepository::class.java)
-
     fun getCategories(userId: String): List<Category> {
         return createListOfRandomMockCategories(10)
     }
@@ -25,7 +22,7 @@ object NotesRepository {
     private fun createRandomMockCategory(id: Int): Category {
         return Category(
             id = id.toString(),
-            name = "Category $id",
+            name = "Lorem ipsum $id",
             userId = 0
         )
     }
@@ -39,7 +36,7 @@ object NotesRepository {
     }
 
     private fun createRandomMockNote(id: Int, categoryId: String): Note {
-        return Note(id.toString(), "title $id", "contents $id", false, 0, categoryId)
+        return Note(id.toString(), "Lorem ipsum $id", "dolor sit amet $id", false, 0, categoryId)
     }
 }
 
