@@ -42,4 +42,4 @@ See instructions on how to run it in [Kotless page](https://github.com/JetBrains
 
 ## Screenshots
 
-![plot](./screenshots/screenshot_notes_compose.png)
+![plot](./Screenshots/screenshot_notes_compose.png)
