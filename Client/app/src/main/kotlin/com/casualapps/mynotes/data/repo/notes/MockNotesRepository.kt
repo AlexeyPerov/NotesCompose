@@ -8,8 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.random.Random
 
-class NotesMockRepository @Inject constructor(
+class MockNotesRepository @Inject constructor(
 ) : NotesRepository {
     private var _initialized = false
 
@@ -23,7 +24,7 @@ class NotesMockRepository @Inject constructor(
     override suspend fun fetchCategories(): ApiResult<CategoriesResponse> {
         return withContext(Dispatchers.IO) {
             delay(100)
-            Success(CategoriesResponse(createListOfRandomMockCategories(10)))
+            Success(CategoriesResponse(createListOfRandomMockCategories(Random.nextInt(10, 20))))
         }
     }
 
@@ -83,7 +84,7 @@ class NotesMockRepository @Inject constructor(
     private fun createRandomMockCategory(id: Int): Category {
         return Category(
             id = id.toString(),
-            name = "Category $id",
+            name = "Lorem ipsum dolor sit amet $id",
             userId = 0
         )
     }
@@ -97,6 +98,6 @@ class NotesMockRepository @Inject constructor(
     }
 
     private fun createRandomMockNote(id: Int, categoryId: String): Note {
-        return Note(id.toString(), "title $id", "contents $id", false, 0, categoryId)
+        return Note(id.toString(), "Excepteur sint occaecat cupidatat non proident $id", "Ut enim $id ad minim veniam, quis nostrud exercitation", false, 0, categoryId)
     }
 }
